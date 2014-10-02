@@ -1,0 +1,13 @@
+<h1>Sign up<h2>
+
+  <form type="/users_index/create" method="post">
+    <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_toekn %>">
+
+    <input type="text" name="user[:email]" value="email">
+    <input type="password" name="user[:password]" value="password">
+    <br>
+    <input type="submit" value="Sign up!">
+  </form>
