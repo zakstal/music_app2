@@ -1,0 +1,15 @@
+<h1>All users</h2>
+
+  <table>
+    <tr>
+      <td>User Email</td>
+    </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.email%></td>
+    <td><%= link_to "User page", user_url(user.id) %></td>
+  </tr>
+  <% end %>
+
+  <a href="<%= bands_url %>">See the bands</a>
+  <table>

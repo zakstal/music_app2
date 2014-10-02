@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  helper_method :logged_in?, :current_user
+
   def current_user
     return nil if session[:token]
     @current_user ||= User.find_by_session_token(session[:token])
@@ -13,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def log_in!(user)
-    session[:token] ||= user.reset_session_token!
+    session[:token] = user.reset_session_token!
   end
 
   def log_out!
