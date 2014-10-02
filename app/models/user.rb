@@ -1,9 +1,11 @@
+
+
 class User < ActiveRecord::Base
 
   attr_reader :password
 
   validates :email, presence: true, uniqueness: true
-  validates :password_digest, prsence: true
+  validates :password_digest, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
   after_initialize :ensure_session_token
@@ -11,7 +13,7 @@ class User < ActiveRecord::Base
   def self.find_by_credentials(email, password)
     user = User.find_by_email(email)
     return nil if user.nil?
-    user.try(:is_password?(password)) ? user : nil
+    user.try(:is_password?) ? user : nil
   end
 
   def self.generate_session_token
@@ -31,7 +33,7 @@ class User < ActiveRecord::Base
   def password=(unencrypeted_password)
     return unless unencrypeted_password.present?
       @password = unencrypeted_password
-      self.password_digest = BCrypt::Passowrd.create(@password)
+      self.password_digest = BCrypt::Password.create(@password)
   end
 
   def ensure_session_token
