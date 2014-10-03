@@ -1,20 +1,28 @@
-<%= action = (@album.persisted? ? album_url(@album.id) : new_album_url ) %>
-<%= method = (@album.persisted? ? "PATCH" : "POST") %>
-
+<% action = (@album.persisted? ? album_url(@album.id) : albums_url ) %>
+<% method = (@album.persisted? ? "PATCH" : "POST") %>
 <form action="<%= action %>" method="POST">
   <input type="hidden" name="_method" value="<%= method %>">
-  <label for="band_name"></label>
-  <selected name="album[band_id]" id="band_name">
+  <input
+  type="hidden"
+  name="authenticity_token"
+  value="<%= form_authenticity_token %>">
+  <label for="Album name">Album name</label>
+  <input type="text" name="album[name]" id="Album name" value="<%= @album.name %>">
+  <br>
+  <label for="band_name">Band name</label>
+  <select name="album[band_id]" id="band_name">
     <option></option>
-    <% Bands.all.each do |band| %>
+    <% Band.all.each do |band| %>
     <option
-    <%= album.band_id == band.id ? "selected" : "" %>
+    <%= @album.band_id == band.id ? "selected" : "" %>
     value="<%= band.id %>"><%= band.name %></option>
     <% end %>
-  </selected>
-  <% SESSION.each do |ses| %>
-    <input type="radio" name="album[session]" value="<%= ses %>"
-      <%= album.session == ses ? "checked" : "" %>>
+  </select>
+  <br>
+  <% Album::SESSION.each do |ses| %>
+  <label for="<%= ses %>"><%= ses %></label>
+    <input type="radio" name="album[session]" id="<%= ses %>" value="<%= ses %>"
+      <%= @album.session == ses ? "checked" : "" %>>
   <% end %>
   <input type="submit">
 </form>

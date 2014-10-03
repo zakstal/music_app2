@@ -9,12 +9,13 @@ class AlbumsController < ApplicationController
   end
 
   def create
-    @album = Albums.new(album_params)
+    @album = Album.new(album_params)
 
     if @album.save
       redirect_to albums_url(@album.id)
     else
-      flash[:errors] = @album.erros.full_messeges
+      fail
+      flash[:errors] = @album.errors.full_messages
       render :new
     end
   end
@@ -29,12 +30,12 @@ class AlbumsController < ApplicationController
   end
 
   def update
-    @album = Albums.find(parmas[:id]).update
+    @album = Album.find(parmas[:id]).update
     redirect_to albums_url(@album.id)
   end
 
   def destroy
-    Albums.find(params[:id]).destroy
+    Album.find(params[:id]).destroy
   end
 
   def album_params

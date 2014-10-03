@@ -7,5 +7,4 @@ class Album < ActiveRecord::Base
   belongs_to :band, dependent: :destroy, inverse_of: :album
   has_many :tracks, dependent: :destroy, inverse_of: :album
 
-
 end
